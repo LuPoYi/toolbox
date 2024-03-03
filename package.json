@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.2.19",
     "@web3-onboard/injected-wallets": "^2.10.11",
     "@web3-onboard/react": "^2.8.13",
+    "bignumber.js": "^9.1.2",
     "ethereum-input-data-decoder": "^0.4.2",
     "ethers": "^6.11.1",
     "json5": "^2.2.3",
