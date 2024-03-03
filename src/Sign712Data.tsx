@@ -2,21 +2,8 @@ import { useState } from "react";
 
 import { Box, Button, Stack } from "@mui/material";
 import { TextField } from "./components/TextField";
+import { jsonParser } from "./utils";
 import { useRootStore } from "./store/root";
-
-function jsonParser(str: string) {
-  const _str = str
-    .replace(/:\s*"([^"]*)"/g, function (match, p1) {
-      return ': "' + p1.replace(/:/g, "@colon@") + '"';
-    })
-    .replace(/:\s*'([^']*)'/g, function (match, p1) {
-      return ': "' + p1.replace(/:/g, "@colon@") + '"';
-    })
-    .replace(/(['"])?([a-z0-9A-Z_]+)(['"])?\s*:/g, '"$2": ')
-    .replace(/@colon@/g, ":");
-
-  return JSON.parse(_str);
-}
 
 function Sign712Data() {
   const { signer } = useRootStore();

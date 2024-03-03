@@ -10,6 +10,9 @@ export function TextField({ sx, ...props }: TextFieldProps) {
         "& label.Mui-focused": {
           color: "white",
         },
+        "& label.Mui-disabled": {
+          color: "white",
+        },
         "& .MuiInputBase-root": {
           color: "white",
           backgroundColor: "#31343A",
