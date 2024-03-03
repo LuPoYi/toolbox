@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import AppBar from "./components/AppBar";
 import Box from "@mui/material/Box";
@@ -21,12 +21,19 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { routes } from "./routes";
 import { useConnectWallet } from "@web3-onboard/react";
+import { useRootStore } from "./store/root";
 import { useTheme } from "@mui/material/styles";
 
 const drawerWidth = 240;
 
 export default function Layout() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+
+  const { setWallet } = useRootStore();
+
+  useEffect(() => {
+    setWallet(wallet);
+  }, [wallet, setWallet]);
 
   const theme = useTheme();
 
