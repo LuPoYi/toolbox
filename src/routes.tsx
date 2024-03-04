@@ -1,6 +1,7 @@
-import AbiDecoder from "./AbiDecoder";
-import Sign712Data from "./Sign712Data";
-import UnitConvter from "./UnitConverter";
+import AbiDecoder from './AbiDecoder';
+import AbiEncoder from './AbiEncoder';
+import Sign712Data from './Sign712Data';
+import UnitConvter from './UnitConverter';
 
 type Route = {
   displayName: string;
@@ -15,7 +16,7 @@ export const routes: Route[] = [
     component: <UnitConvter />,
   },
   {
-    displayName: "Abi Decoder",
+    displayName: "ABI Decoder",
     path: "/abi-decoder",
     component: <AbiDecoder />,
   },
@@ -23,5 +24,10 @@ export const routes: Route[] = [
     displayName: "Sign 712 Data",
     path: "/sign-712-data",
     component: <Sign712Data />,
+  },
+  {
+    displayName: "ABI Encoder",
+    path: "/abi-encoder",
+    component: <AbiEncoder />,
   },
 ];
