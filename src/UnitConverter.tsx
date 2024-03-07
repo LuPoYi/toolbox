@@ -1,58 +1,61 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import BN from "bignumber.js";
-import { Box, Stack } from "@mui/material";
-import { TextField } from "./components/TextField";
+import BN from 'bignumber.js';
+import {
+  FormControl,
+  Grid,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Typography,
+} from '@mui/material';
 
 const scale: Record<string, number> = {
   wei: 0,
   gwei: 9,
   ether: 18,
-};
-const _scale = Object.entries(scale).map(([, decimal]) => decimal);
+}
+const _scale = Object.entries(scale).map(([, decimal]) => decimal)
 
 function UnitConvter() {
-  const [unit, setUnit] = useState(Object.keys(scale).map(() => "0"));
+  const [unit, setUnit] = useState(Object.keys(scale).map(() => "0"))
 
   const handleOnChange = (index: number, value: string) => {
-    let _unit = [...unit];
+    let _unit = [...unit]
     try {
       _unit = Object.entries(scale).map(([, decimal], i) => {
-        const n = new BN(value).times(new BN(10).pow(_scale[index] - decimal));
-        if (n.isNaN()) return "";
-        return index === i ? value : n.toFixed();
-      });
-      setUnit(_unit);
+        const n = new BN(value).times(new BN(10).pow(_scale[index] - decimal))
+        if (n.isNaN()) return ""
+        return index === i ? value : n.toFixed()
+      })
+      setUnit(_unit)
     } catch (error) {}
-  };
+  }
 
   return (
-    <Box>
-      <Box
-        display="flex"
-        justifyContent="center"
-        sx={{ marginBottom: 10, marginTop: 3 }}
-      >
-        Unit Converter
-      </Box>
-      <Stack>
+    <Grid container spacing={6}>
+      <Grid item xs={12}>
+        <Typography variant="h5">Unit Converter</Typography>
+      </Grid>
+
+      <Grid item sm={12} md={6}>
         {Object.entries(scale).map(([key], i) => (
-          <div
-            style={{ display: "flex", alignItems: "center", marginBottom: 15 }}
-            key={key}
-          >
-            <TextField
-              style={{ marginRight: 20, width: "50%" }}
-              onChange={(e) => handleOnChange(i, e.target.value)}
+          <FormControl key={key} fullWidth sx={{ marginTop: 3 }}>
+            <InputLabel htmlFor={key}>{key}</InputLabel>
+            <OutlinedInput
+              key={key}
+              label={key}
               value={unit[i]}
-              placeholder="0"
+              onChange={(e) => handleOnChange(i, e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">{key}</InputAdornment>
+              }
             />
-            {key}
-          </div>
+          </FormControl>
         ))}
-      </Stack>
-    </Box>
-  );
+      </Grid>
+    </Grid>
+  )
 }
 
-export default UnitConvter;
+export default UnitConvter

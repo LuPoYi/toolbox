@@ -1,31 +1,33 @@
-import React from "react";
+import React from 'react';
 
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
-import { ThemeProvider } from "@emotion/react";
-import { Web3OnboardProvider, init } from "@web3-onboard/react";
-import { chains } from "./configs";
-import { createTheme } from "@mui/material";
-import injectedModule from "@web3-onboard/injected-wallets";
-import { routes } from "./routes";
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import Layout from './Layout';
+import { ThemeProvider } from '@emotion/react';
+import { Web3OnboardProvider, init } from '@web3-onboard/react';
+import { chains } from './configs';
+import { createTheme } from '@mui/material';
+import injectedModule from '@web3-onboard/injected-wallets';
+import palette from './theme/palette';
+import { routes } from './routes';
 
-const injected = injectedModule();
+const injected = injectedModule()
 
 const web3Onboard = init({
   wallets: [injected],
   chains,
-});
+})
 
 const theme = createTheme({
-  palette: {
-    background: { default: "#272727" },
-  },
+  // palette: {
+  //   background: { default: "#272727" },
+  // },
+  palette: palette('dark', 'primary'),
   typography: {
     allVariants: {
       color: "white",
     },
   },
-});
+})
 
 function App() {
   return (
@@ -43,7 +45,7 @@ function App() {
         </BrowserRouter>
       </ThemeProvider>
     </Web3OnboardProvider>
-  );
+  )
 }
 
-export default App;
+export default App

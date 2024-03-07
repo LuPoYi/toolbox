@@ -1,60 +1,58 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Box, Stack } from "@mui/material";
-import InputDataDecoder from "ethereum-input-data-decoder";
-import { TextField } from "./components/TextField";
+import { Grid, Typography } from '@mui/material';
+import InputDataDecoder from 'ethereum-input-data-decoder';
+import { TextField } from './components/TextField';
 
 function AbiDecoder() {
-  const [abi, setAbi] = useState("");
-  const [txData, setTxData] = useState("");
-  const [decodedData, setDecodedData] = useState("");
+  const [abi, setAbi] = useState("")
+  const [txData, setTxData] = useState("")
+  const [decodedData, setDecodedData] = useState("")
 
   useEffect(() => {
     const timer = setTimeout(async () => {
       try {
-        const decoder = new InputDataDecoder(abi);
-        const r = decoder.decodeData(txData);
-        setDecodedData(JSON.stringify(r, null, 2));
+        const decoder = new InputDataDecoder(abi)
+        const r = decoder.decodeData(txData)
+        setDecodedData(JSON.stringify(r, null, 2))
       } catch (error) {
-        console.log("error :>> ", error);
+        console.log("error :>> ", error)
       }
-    }, 300);
+    }, 300)
 
-    return () => clearTimeout(timer);
-  }, [abi, txData]);
+    return () => clearTimeout(timer)
+  }, [abi, txData])
 
   return (
-    <div>
-      <Box
-        display="flex"
-        justifyContent="center"
-        sx={{ marginBottom: 10, marginTop: 3 }}
-      >
-        Abi Decoder
-      </Box>
-      <Stack
-        spacing={{ xs: 1, md: 5 }}
-        direction="row"
-        useFlexGap
-        flexWrap="wrap"
-        display="flex"
-        justifyContent="center"
-      >
+    <Grid container spacing={6}>
+      <Grid item xs={12}>
+        <Typography variant="h5">Abi Decoder</Typography>
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
         <TextField
           label="ABI"
           multiline
+          fullWidth
           rows={16}
+          sx={{ "& .MuiOutlinedInput-root": { alignItems: "baseline" } }}
           onChange={(e) => setAbi(e.target.value)}
         />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
         <TextField
           label="Tx Data"
           multiline
+          fullWidth
           rows={16}
+          sx={{ "& .MuiOutlinedInput-root": { alignItems: "baseline" } }}
           onChange={(e) => setTxData(e.target.value)}
         />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
         <TextField
           label="data"
           multiline
+          fullWidth
           rows={16}
           disabled
           value={decodedData}
@@ -71,9 +69,9 @@ function AbiDecoder() {
             },
           }}
         />
-      </Stack>
-    </div>
-  );
+      </Grid>
+    </Grid>
+  )
 }
 
-export default AbiDecoder;
+export default AbiDecoder

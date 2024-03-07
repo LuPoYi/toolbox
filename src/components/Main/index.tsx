@@ -1,11 +1,16 @@
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-  open?: boolean;
-  drawer_width: number;
+  open?: boolean
+  drawer_width: number
 }>(({ theme, open, drawer_width }) => ({
   flexGrow: 1,
-  // padding: theme.spacing(3),
+  width: "100%",
+  padding: theme.spacing(6),
+  [theme.breakpoints.down("sm")]: {
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+  },
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -18,6 +23,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
     }),
     marginLeft: 0,
   }),
-}));
+}))
 
-export default Main;
+export default Main
