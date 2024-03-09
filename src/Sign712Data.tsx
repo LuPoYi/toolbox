@@ -1,34 +1,29 @@
 import { useState } from 'react';
 
-import { Button, Grid, Typography } from '@mui/material';
-import { TextField } from './components/TextField';
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import { jsonParser } from './utils';
 import { useRootStore } from './store/root';
 
 function Sign712Data() {
-  const { signer } = useRootStore()
-  const [types, setTypes] = useState("")
-  const [domain, setDomain] = useState("")
-  const [value, setValue] = useState("")
-  const [isValidTypes, setIsValidTypes] = useState(true)
-  const [isValidDomain, setIsValidDomain] = useState(true)
-  const [isValidValue, setIsValidValue] = useState(true)
+  const { signer } = useRootStore();
+  const [types, setTypes] = useState('');
+  const [domain, setDomain] = useState('');
+  const [value, setValue] = useState('');
+  const [isValidTypes, setIsValidTypes] = useState(true);
+  const [isValidDomain, setIsValidDomain] = useState(true);
+  const [isValidValue, setIsValidValue] = useState(true);
 
   const handleClick = () => {
-    ;(async () => {
-      if (!signer) return
+    (async () => {
+      if (!signer) return;
       try {
-        const sig = await signer.signTypedData(
-          jsonParser(domain),
-          jsonParser(types),
-          jsonParser(value)
-        )
-        console.log("sig :>> ", sig)
+        const sig = await signer.signTypedData(jsonParser(domain), jsonParser(types), jsonParser(value));
+        console.log('sig :>> ', sig);
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
-    })()
-  }
+    })();
+  };
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
@@ -37,26 +32,19 @@ function Sign712Data() {
 
       <Grid item xs={12} sm={6} md={4}>
         <TextField
-          id="outlined-multiline-static"
           label="types"
           multiline
           fullWidth
           rows={16}
           value={types}
-          sx={{
-            "& .MuiInputBase-root": {
-              color: isValidTypes ? "white" : "red",
-              backgroundColor: "#31343A",
-            },
-          }}
           onChange={(event) => {
-            setTypes(event.target.value)
+            setTypes(event.target.value);
             try {
-              setIsValidTypes(true)
-              !!event.target.value.length && jsonParser(event.target.value)
+              setIsValidTypes(true);
+              !!event.target.value.length && jsonParser(event.target.value);
             } catch (error) {
-              setIsValidTypes(false)
-              console.log("invalid json string")
+              setIsValidTypes(false);
+              console.log('invalid json string');
             }
           }}
         />
@@ -64,69 +52,50 @@ function Sign712Data() {
 
       <Grid item xs={12} sm={6} md={4}>
         <TextField
-          id="outlined-multiline-static"
           label="domain"
           multiline
           fullWidth
           rows={16}
           value={domain}
-          sx={{
-            "& .MuiInputBase-root": {
-              color: isValidDomain ? "white" : "red",
-              backgroundColor: "#31343A",
-            },
-          }}
           onChange={(event) => {
-            setDomain(event.target.value)
+            setDomain(event.target.value);
             try {
-              setIsValidDomain(true)
-              !!event.target.value.length && jsonParser(event.target.value)
+              setIsValidDomain(true);
+              !!event.target.value.length && jsonParser(event.target.value);
             } catch (error) {
-              setIsValidDomain(false)
-              console.log("invalid json string")
+              setIsValidDomain(false);
+              console.log('invalid json string');
             }
           }}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <TextField
-          id="outlined-multiline-static"
           label="value"
           multiline
           fullWidth
           rows={16}
           value={value}
-          sx={{
-            "& .MuiInputBase-root": {
-              color: isValidValue ? "white" : "red",
-              backgroundColor: "#31343A",
-            },
-          }}
           onChange={(event) => {
-            setValue(event.target.value)
+            setValue(event.target.value);
             try {
-              setIsValidValue(true)
-              !!event.target.value.length && jsonParser(event.target.value)
+              setIsValidValue(true);
+              !!event.target.value.length && jsonParser(event.target.value);
             } catch (error) {
-              setIsValidValue(false)
-              console.log("invalid json string")
+              setIsValidValue(false);
+              console.log('invalid json string');
             }
           }}
         />
       </Grid>
 
-      <Grid item xs={4} style={{ margin: "auto" }}>
-        <Button
-          fullWidth
-          onClick={handleClick}
-          variant="contained"
-          style={{ background: "#4E535D" }}
-        >
+      <Grid item xs={4} style={{ margin: 'auto' }}>
+        <Button fullWidth onClick={handleClick} variant="contained" size="large">
           sign
         </Button>
       </Grid>
     </Grid>
-  )
+  );
 }
 
-export default Sign712Data
+export default Sign712Data;
