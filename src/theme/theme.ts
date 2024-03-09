@@ -89,6 +89,9 @@ export const getThemeOptions = (mode: PaletteMode) => {
         '"Segoe UI Symbol"',
       ].join(','),
     },
+    shape: {
+      borderRadius: 8,
+    },
   };
 };
 

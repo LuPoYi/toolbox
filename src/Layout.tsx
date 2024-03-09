@@ -77,7 +77,7 @@ export default function Layout() {
           <IconButton color="inherit" aria-haspopup="true" onClick={() => toggleTheme()}>
             {themeMode === 'light' ? <WeatherSunny /> : <WeatherNight />}
           </IconButton>
-          <Button color="inherit" disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
+          <Button variant="contained" disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
             {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
           </Button>
         </Toolbar>

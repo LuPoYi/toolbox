@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Grid, Select, TextField, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, Grid, Select, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { ethers } from 'ethers';
 import { jsonParser } from './utils';
@@ -63,38 +63,40 @@ function AbiEncoder() {
   }, [paramsData, selectedSig]);
 
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <Typography variant="h5">Abi Encoder</Typography>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TextField label="ABI" multiline fullWidth rows={16} onChange={(e) => setAbi(e.target.value)} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <Select
-          fullWidth
-          value={selectedSig}
-          onChange={(e) => setSelectedSig(e.target.value)}
-          style={{ maxWidth: 350 }}
-        >
-          {funcSigs.map(([funcName, sig]) => (
-            <MenuItem value={sig}>
-              {sig}-{funcName}
-            </MenuItem>
-          ))}
-        </Select>
-        {funcParams.length > 0 &&
-          funcParams.map((param, i) => (
-            <div>
-              {param}
-              <TextField key={param} value={paramsData[i]} onChange={(e) => handleOnChange(i, e.target.value)} />
-            </div>
-          ))}
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TextField label="TxData:" multiline fullWidth rows={16} disabled value={encodedData} />
-      </Grid>
-    </Grid>
+    <Card>
+      <CardHeader title="Abi Encoder" />
+      <CardContent>
+        <Grid container spacing={6}>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="ABI" multiline fullWidth rows={16} onChange={(e) => setAbi(e.target.value)} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Select
+              fullWidth
+              value={selectedSig}
+              onChange={(e) => setSelectedSig(e.target.value)}
+              style={{ maxWidth: 350 }}
+            >
+              {funcSigs.map(([funcName, sig]) => (
+                <MenuItem value={sig}>
+                  {sig}-{funcName}
+                </MenuItem>
+              ))}
+            </Select>
+            {funcParams.length > 0 &&
+              funcParams.map((param, i) => (
+                <div>
+                  {param}
+                  <TextField key={param} value={paramsData[i]} onChange={(e) => handleOnChange(i, e.target.value)} />
+                </div>
+              ))}
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="TxData:" multiline fullWidth rows={16} disabled value={encodedData} />
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 }
 

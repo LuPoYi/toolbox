@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Grid, TextField, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, Grid, TextField } from '@mui/material';
 import InputDataDecoder from 'ethereum-input-data-decoder';
 
 function AbiDecoder() {
@@ -23,20 +23,22 @@ function AbiDecoder() {
   }, [abi, txData]);
 
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <Typography variant="h5">Abi Decoder</Typography>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TextField label="ABI" multiline fullWidth rows={16} onChange={(e) => setAbi(e.target.value)} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TextField label="Tx Data" multiline fullWidth rows={16} onChange={(e) => setTxData(e.target.value)} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <TextField label="data" multiline fullWidth rows={16} disabled value={decodedData} />
-      </Grid>
-    </Grid>
+    <Card>
+      <CardHeader title="Abi Decoder" />
+      <CardContent>
+        <Grid container spacing={6}>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="ABI" multiline fullWidth rows={16} onChange={(e) => setAbi(e.target.value)} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="Tx Data" multiline fullWidth rows={16} onChange={(e) => setTxData(e.target.value)} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="data" multiline fullWidth rows={16} disabled value={decodedData} />
+          </Grid>
+        </Grid>{' '}
+      </CardContent>
+    </Card>
   );
 }
 
