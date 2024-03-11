@@ -85,10 +85,14 @@ function AbiEncoder() {
             </Select>
             {funcParams.length > 0 &&
               funcParams.map((param, i) => (
-                <div>
-                  {param}
-                  <TextField key={param} value={paramsData[i]} onChange={(e) => handleOnChange(i, e.target.value)} />
-                </div>
+                <TextField
+                  label={param}
+                  sx={{ marginTop: '20px' }}
+                  fullWidth
+                  key={param}
+                  value={paramsData[i]}
+                  onChange={(e) => handleOnChange(i, e.target.value)}
+                />
               ))}
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
