@@ -1,13 +1,10 @@
-import React from "react";
-
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
-import { ThemeProvider } from "@emotion/react";
-import { Web3OnboardProvider, init } from "@web3-onboard/react";
-import { chains } from "./configs";
-import { createTheme } from "@mui/material";
-import injectedModule from "@web3-onboard/injected-wallets";
-import { routes } from "./routes";
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { CustomThemeProvider } from './contexts/ThemeContext';
+import Layout from './Layout';
+import { Web3OnboardProvider, init } from '@web3-onboard/react';
+import { chains } from './configs';
+import injectedModule from '@web3-onboard/injected-wallets';
+import { routes } from './routes';
 
 const injected = injectedModule();
 
@@ -16,21 +13,10 @@ const web3Onboard = init({
   chains,
 });
 
-const theme = createTheme({
-  palette: {
-    background: { default: "#272727" },
-  },
-  typography: {
-    allVariants: {
-      color: "white",
-    },
-  },
-});
-
 function App() {
   return (
     <Web3OnboardProvider web3Onboard={web3Onboard}>
-      <ThemeProvider theme={theme}>
+      <CustomThemeProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
@@ -41,7 +27,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-      </ThemeProvider>
+      </CustomThemeProvider>
     </Web3OnboardProvider>
   );
 }

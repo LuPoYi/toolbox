@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Box, Stack } from "@mui/material";
-import InputDataDecoder from "ethereum-input-data-decoder";
-import { TextField } from "./components/TextField";
+import { Card, CardContent, CardHeader, Grid, TextField } from '@mui/material';
+import InputDataDecoder from 'ethereum-input-data-decoder';
 
 function AbiDecoder() {
-  const [abi, setAbi] = useState("");
-  const [txData, setTxData] = useState("");
-  const [decodedData, setDecodedData] = useState("");
+  const [abi, setAbi] = useState('');
+  const [txData, setTxData] = useState('');
+  const [decodedData, setDecodedData] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -16,7 +15,7 @@ function AbiDecoder() {
         const r = decoder.decodeData(txData);
         setDecodedData(JSON.stringify(r, null, 2));
       } catch (error) {
-        console.log("error :>> ", error);
+        console.log('error :>> ', error);
       }
     }, 300);
 
@@ -24,55 +23,22 @@ function AbiDecoder() {
   }, [abi, txData]);
 
   return (
-    <div>
-      <Box
-        display="flex"
-        justifyContent="center"
-        sx={{ marginBottom: 10, marginTop: 3 }}
-      >
-        Abi Decoder
-      </Box>
-      <Stack
-        spacing={{ xs: 1, md: 5 }}
-        direction="row"
-        useFlexGap
-        flexWrap="wrap"
-        display="flex"
-        justifyContent="center"
-      >
-        <TextField
-          label="ABI"
-          multiline
-          rows={16}
-          onChange={(e) => setAbi(e.target.value)}
-        />
-        <TextField
-          label="Tx Data"
-          multiline
-          rows={16}
-          onChange={(e) => setTxData(e.target.value)}
-        />
-        <TextField
-          label="data"
-          multiline
-          rows={16}
-          disabled
-          value={decodedData}
-          sx={{
-            "& .MuiInputBase-root": {
-              color: "white",
-              backgroundColor: "#31343A",
-              "&.Mui-disabled fieldset": {
-                borderColor: "white",
-              },
-              ".Mui-disabled": {
-                WebkitTextFillColor: "white",
-              },
-            },
-          }}
-        />
-      </Stack>
-    </div>
+    <Card>
+      <CardHeader title="Abi Decoder" />
+      <CardContent>
+        <Grid container spacing={6}>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="ABI" multiline fullWidth rows={16} onChange={(e) => setAbi(e.target.value)} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="Tx Data" multiline fullWidth rows={16} onChange={(e) => setTxData(e.target.value)} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField label="data" multiline fullWidth rows={16} disabled value={decodedData} />
+          </Grid>
+        </Grid>{' '}
+      </CardContent>
+    </Card>
   );
 }
 

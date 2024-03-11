@@ -1,32 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import AppBar from "./components/AppBar";
-import Box from "@mui/material/Box";
-import { Button, useMediaQuery } from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import DrawerHeader from "./components/DrawerHeader";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Main from "./components/Main";
-import MenuIcon from "@mui/icons-material/Menu";
-import { NavLink, Outlet } from "react-router-dom";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { routes } from "./routes";
-import { useConnectWallet } from "@web3-onboard/react";
-import { useRootStore } from "./store/root";
-import { useTheme } from "@mui/material/styles";
+import AppBar from './components/AppBar';
+import Box from '@mui/material/Box';
+import { Button, useMediaQuery } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import DrawerHeader from './components/DrawerHeader';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Main from './components/Main';
+import MenuIcon from '@mui/icons-material/Menu';
+import { NavLink, Outlet } from 'react-router-dom';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import WeatherNight from 'mdi-material-ui/WeatherNight';
+import WeatherSunny from 'mdi-material-ui/WeatherSunny';
+import { routes } from './routes';
+import { styled, useTheme } from '@mui/material/styles';
+import { useConnectWallet } from '@web3-onboard/react';
+import { useRootStore } from './store/root';
+import { useThemeContext } from './contexts/ThemeContext';
 
 const drawerWidth = 240;
 
+const StyledNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: 'none',
+
+  '&.active div[role="button"], & div[role="button"]:hover': {
+    boxShadow: theme.shadows[3],
+    background: theme.palette.primary.main,
+  },
+}));
+
 export default function Layout() {
+  const theme = useTheme();
+  const { themeMode, toggleTheme } = useThemeContext();
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
 
   const { setWallet } = useRootStore();
@@ -35,46 +49,36 @@ export default function Layout() {
     setWallet(wallet);
   }, [wallet, setWallet]);
 
-  const theme = useTheme();
-
   // contral drawer
-  const [isDrawerOpen, setIsDrawOpen] = useState(
-    useMediaQuery(theme.breakpoints.up("sm"))
-  );
+  const [isDrawerOpen, setIsDrawOpen] = useState(useMediaQuery(theme.breakpoints.up('sm')));
 
   return (
     <Box
       sx={{
-        display: "flex",
+        display: 'flex',
+        minHeight: '100vh',
       }}
     >
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        open={isDrawerOpen}
-        drawer_width={drawerWidth}
-        style={{ backgroundColor: "#202020" }}
-        enableColorOnDark
-      >
+      <AppBar position="fixed" open={isDrawerOpen} drawer_width={drawerWidth} enableColorOnDark color="transparent">
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={() => setIsDrawOpen(true)}
             edge="start"
-            sx={{ mr: 2, ...(isDrawerOpen && { display: "none" }) }}
+            sx={{ mr: 2, ...(isDrawerOpen && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Tool box
           </Typography>
-          <Button
-            color="inherit"
-            disabled={connecting}
-            onClick={() => (wallet ? disconnect(wallet) : connect())}
-          >
-            {connecting ? "connecting" : wallet ? "disconnect" : "connect"}
+          <IconButton color="inherit" aria-haspopup="true" onClick={() => toggleTheme()}>
+            {themeMode === 'light' ? <WeatherSunny /> : <WeatherNight />}
+          </IconButton>
+          <Button variant="contained" disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
+            {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
           </Button>
         </Toolbar>
       </AppBar>
@@ -82,10 +86,9 @@ export default function Layout() {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          "& .MuiDrawer-paper": {
+          '& .MuiDrawer-paper': {
             width: drawerWidth,
-            boxSizing: "border-box",
-            backgroundColor: "#202020",
+            boxSizing: 'border-box',
           },
         }}
         variant="persistent"
@@ -94,27 +97,23 @@ export default function Layout() {
       >
         <DrawerHeader>
           <IconButton onClick={() => setIsDrawOpen(false)}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon style={{ color: "white" }} />
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon style={{ color: 'white' }} />
             ) : (
-              <ChevronRightIcon style={{ color: "white" }} />
+              <ChevronRightIcon style={{ color: 'white' }} />
             )}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List disablePadding>
           {routes.map(({ displayName, path }) => (
-            <NavLink
-              to={path}
-              key={displayName}
-              style={{ textDecoration: "none" }}
-            >
+            <StyledNavLink to={path} key={displayName}>
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemText primary={displayName} />
                 </ListItemButton>
               </ListItem>
-            </NavLink>
+            </StyledNavLink>
           ))}
         </List>
       </Drawer>
