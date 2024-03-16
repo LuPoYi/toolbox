@@ -90,7 +90,16 @@ export const getThemeOptions = (mode: PaletteMode) => {
       ].join(','),
     },
     shape: {
-      borderRadius: 8,
+      borderRadius: 16,
+    },
+    components: {
+      // MuiCard: {
+      //   styleOverrides: {
+      //     root: {
+      //       padding: '8px',
+      //     },
+      //   },
+      // },
     },
   };
 };

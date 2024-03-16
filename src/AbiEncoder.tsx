@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Card, CardContent, CardHeader, Grid, Select, TextField } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
+import { Card, CardContent, CardHeader, Grid, MenuItem, Select, TextField } from '@mui/material';
 import { ethers } from 'ethers';
 import { jsonParser } from './utils';
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import AppBar from './components/AppBar';
 import Box from '@mui/material/Box';
-import { Button, useMediaQuery } from '@mui/material';
+import { Button, ListItemIcon, useMediaQuery } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -74,7 +74,7 @@ export default function Layout() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Tool box
           </Typography>
-          <IconButton color="inherit" aria-haspopup="true" onClick={() => toggleTheme()}>
+          <IconButton color="inherit" aria-haspopup="true" onClick={() => toggleTheme()} sx={{ marginRight: 1 }}>
             {themeMode === 'light' ? <WeatherSunny /> : <WeatherNight />}
           </IconButton>
           <Button variant="contained" disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
@@ -105,11 +105,12 @@ export default function Layout() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List disablePadding>
-          {routes.map(({ displayName, path }) => (
+        <List component="nav" disablePadding>
+          {routes.map(({ displayName, icon, path }) => (
             <StyledNavLink to={path} key={displayName}>
               <ListItem disablePadding>
                 <ListItemButton>
+                  <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText primary={displayName} />
                 </ListItemButton>
               </ListItem>

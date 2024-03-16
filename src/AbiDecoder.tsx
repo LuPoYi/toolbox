@@ -36,7 +36,7 @@ function AbiDecoder() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField label="data" multiline fullWidth rows={16} disabled value={decodedData} />
           </Grid>
-        </Grid>{' '}
+        </Grid>
       </CardContent>
     </Card>
   );
